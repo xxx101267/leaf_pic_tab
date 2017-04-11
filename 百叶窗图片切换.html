@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box{
+				width: 700px;
+				height: 500px;
+				border: 10px solid rgba(255,255,255,.5);
+				margin: 50px auto;
+				perspective: 800px;
+				border-radius: 10px;
+			}
+			#box div{
+				width: 10px;
+				height: 500px;
+				float: left;
+				background-image: url("img/0.jpg");
+				background-size: 700px 500px;
+				transition: .5s;
+			}
+		</style>
+	</head>
+	<body style="background-color: black;">
+		<div id="box"></div>
+		<script>
+		    var box = document.getElementById("box");
+		    var str = "";
+		    var num = 0;
+		    var timer = null;
+		    for (var i = 0; i < 70; i++) {
+		    	str += "<div style='background-position:"+-(i*10)+"px 0px'></div>";
+		    }
+		    box.innerHTML = str;
+		    var divs = box.getElementsByTagName("div");
+		    var onoff = true;
+		    var arr = ["img/0.jpg","img/1.jpg","img/2.jpg","img/3.jpg","img/4.jpg"];
+		    document.onclick = function(){
+		    	setInterval(function(){
+		    		if(!onoff)return;
+			    	onoff = false;
+			    	num++;
+			    	num %= arr.length;
+					tab(0)
+		    	},2000)
+		    }
+		    function tab(a){
+		    	if(a>0){
+		    		divs[a-1].style.opacity = 1;
+// 		    		divs[a-1].style.transform = "rotateX(0)";
+		    	}
+		    	if(divs[a])divs[a].style.opacity = 0;
+//		    	if(divs[a])divs[a].style.transform = "rotateX(360deg)";
+		    	setTimeout(function(){
+		    		if(divs[a]){
+		    			divs[a].style.backgroundImage = "url("+arr[num]+")";
+		    		}else{
+		    			onoff = true;
+		    			return;
+		    		}
+		    		tab(a+1);
+		    	},50)
+		    }
+		</script>
+	</body>
+</html>
